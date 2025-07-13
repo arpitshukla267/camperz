@@ -49,7 +49,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center text-2xl font-bold text-black py-3">
-          Hi<span className="text-green-500 ml-1">links.</span>
+          Hi<span className="text-green-500">links.</span>
         </Link>
 
         {/* Desktop nav */}
