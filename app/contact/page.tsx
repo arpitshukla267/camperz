@@ -56,47 +56,48 @@ const ContactPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    const { name, email, subject, message } = formData;
+  const { name, email, subject, message } = formData;
 
-    if (!name || !email || !subject || !message) {
-      alert("Please fill out all required fields.");
-      return;
-    }
+  if (!name || !email || !subject || !message) {
+    alert("Please fill out all required fields.");
+    return;
+  }
 
-    setIsSubmitting(true);
-    setSubmitStatus(null);
+  setIsSubmitting(true);
+  setSubmitStatus(null);
 
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/messages/global-submit",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, subject, message }),
-        }
-      );
-
-      const data: ApiResponse = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to send message");
+  try {
+    const response = await fetch(
+      "https://arpit-s-dashboard-backend.onrender.com/api/messages/global-submit", // ✅ deployed backend
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
       }
+    );
 
-      console.log("✅ Message sent:", data.data);
+    const data: ApiResponse = await response.json();
 
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      setSubmitStatus("success");
-    } catch (error) {
-      console.error("❌ Error sending message:", error);
-      setSubmitStatus("error");
-      alert("Failed to send message. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to send message");
     }
-  };
+
+    console.log("✅ Message sent:", data.data);
+
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    setSubmitStatus("success");
+  } catch (error) {
+    console.error("❌ Error sending message:", error);
+    setSubmitStatus("error");
+    alert("Failed to send message. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <section
